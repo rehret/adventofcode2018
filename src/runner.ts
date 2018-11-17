@@ -1,13 +1,13 @@
-function execute(dayArg: string, puzzleArg: string) {
-	const day = parseInt(dayArg);
-	const puzzle = parseInt(puzzleArg);
+function execute(dayInput: string, puzzleInput: string) {
+	const day = parseInt(dayInput);
+	const puzzle = parseInt(puzzleInput);
 
 	if (!isNaN(day) && !isNaN(puzzle)) {
 		const dayStr = `day-${leftPad(day.toString(), 2, '0')}`;
 		const puzzleStr = `puzzle-${leftPad(puzzle.toString(), 2, '0')}`;
 		const solution = require(`./${dayStr}/${puzzleStr}/index.ts`);
 
-		const functionKey = Object.keys(solution).find(key => typeof solution[key] === 'function');
+		const functionKey = Object.keys(solution).find((key) => typeof solution[key] === 'function');
 		if (functionKey) {
 			console.log(solution[functionKey]());
 		} else {
