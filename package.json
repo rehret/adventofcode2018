@@ -1,0 +1,33 @@
+{
+  "name": "adventofcode2018",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Randy Ehret <randyehret@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "clean": "n-clean dist",
+    "lint": "tslint src/**/*.ts",
+    "prebuild": "yarn lint",
+    "build": "tsc",
+		"prestart": "yarn lint",
+		"start": "ts-node src/runner.ts",
+		"pretest": "yarn lint",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+		"test:watch": "yarn test --watch --watch-extensions ts",
+		"pretest:coverage": "yarn lint",
+    "test:coverage": "nyc mocha src/**/*.spec.ts"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.9",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "npm-build-tools": "^2.2.5",
+    "nyc": "^13.1.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  }
+}

@@ -1,0 +1,15 @@
+# node
+node_modules
+
+# yarn
+yarn-error.log
+
+# tests
+.nyc_output
+coverage
+
+# build
+dist
+
+# vscode
+.vscode/settings.json
