@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - "10"
+cache:
+  yarn: true
+script: yarn test && yarn test:coverage --reporter=min && yarn nyc report --reporter=text-lcov | yarn coveralls
+notifications:
+	email: false
