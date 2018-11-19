@@ -7,11 +7,10 @@ function execute(dayInput: string, puzzleInput: string) {
 		const puzzleStr = `puzzle-${leftPad(puzzle.toString(), 2, '0')}`;
 		const solution = require(`./${dayStr}/${puzzleStr}/index.ts`);
 
-		const functionKey = Object.keys(solution).find((key) => typeof solution[key] === 'function');
-		if (functionKey) {
-			console.log(solution[functionKey]());
+		if (typeof solution.default === 'function') {
+			solution.default();
 		} else {
-			throw new Error(`Day ${day} Puzzle ${puzzle} does not export a function`);
+			console.error(`${dayStr}/${puzzleStr} does not not export a default function`);
 		}
 	} else {
 		throw new Error('Parameter is not a number');
