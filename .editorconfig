@@ -17,3 +17,6 @@ indent_style = space
 
 [*.yml]
 indent_style = space
+
+[.nycrc]
+indent_style = space

@@ -16,6 +16,6 @@
     "exclude": [
         "src/**/*.spec.ts",
         "src/runner.ts",
-		"src/day-*/puzzle-*/index.ts"
+        "src/day-*/puzzle-*/index.ts"
     ]
 }
