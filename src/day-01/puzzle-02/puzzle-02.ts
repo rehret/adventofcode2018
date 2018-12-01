@@ -1,6 +1,6 @@
 import { parse } from '../lib/parser';
 
-export function puzzle02(input: string[]): number {
+export function findDuplicateFrequency(input: string[]): number {
 	const frequencyPattern = input.map((str) => parse(str));
 	const previousFrequencies: number[] = [];
 	let duplicateFrequency: number | null = null;

@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import { parse } from './lib/parser';
 import { split } from './lib/input-splitter';
-import { puzzle01 } from './puzzle-01';
-import { puzzle02 } from './puzzle-02';
+import { getFinalFrequency } from './puzzle-01';
+import { findDuplicateFrequency } from './puzzle-02';
 
 describe('day-01', () => {
 	describe('lib', () => {
@@ -61,7 +61,7 @@ describe('day-01', () => {
 			const input = ['+1', '-2', '+3', '+1'];
 
 			// Act
-			const result = puzzle01(input);
+			const result = getFinalFrequency(input);
 
 			// Assert
 			assert.equal(result, 3);
@@ -77,7 +77,7 @@ describe('day-01', () => {
 				const input = testCase.input;
 
 				// Act
-				const result = puzzle01(split(input));
+				const result = getFinalFrequency(split(input));
 
 				// Assert
 				assert.equal(result, testCase.expected);
@@ -91,7 +91,7 @@ describe('day-01', () => {
 			const input = ['+1', '-2', '+3', '+1'];
 
 			// Act
-			const result = puzzle02(input);
+			const result = findDuplicateFrequency(input);
 
 			// Assert
 			assert.equal(result, 2);
@@ -108,7 +108,7 @@ describe('day-01', () => {
 				const input = testCase.input;
 
 				// Act
-				const result = puzzle02(split(input));
+				const result = findDuplicateFrequency(split(input));
 
 				// Assert
 				assert.equal(result, testCase.expected);
