@@ -41,7 +41,7 @@ describe('day-01', () => {
 				{ input: 'a,\nb,\nc', expected: ['a', 'b', 'c'] },
 				{ input: 'a\nb\nc', expected: ['a', 'b', 'c'] }
 			].forEach((testCase) => {
-				it(`should split based on optional comma and required whitespace ("${testCase.input}")`, () => {
+				it(`should split based on optional comma and required whitespace ("${testCase.input.replace(/\n/g, '\\n')}")`, () => {
 					// Arrange
 					const input = testCase.input;
 

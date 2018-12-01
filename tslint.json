@@ -18,7 +18,15 @@
 		"indent": [
 			true,
 			"tabs"
-		],
+        ],
+        "max-line-length": {
+            "options":[
+                {
+                    "limit": 140
+                }
+            ],
+            "severity": "warning"
+        },
         "ordered-imports": false,
         "trailing-comma": false,
         "object-literal-sort-keys": false,
