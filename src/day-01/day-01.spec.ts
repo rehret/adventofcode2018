@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import { parse } from './lib/parser';
 import { split } from './lib/input-splitter';
 import { puzzle01 } from './puzzle-01';
+import { puzzle02 } from './puzzle-02';
 
 describe('day-01', () => {
 	describe('lib', () => {
@@ -77,6 +78,37 @@ describe('day-01', () => {
 
 				// Act
 				const result = puzzle01(split(input));
+
+				// Assert
+				assert.equal(result, testCase.expected);
+			});
+		});
+	});
+
+	describe('puzzle-02', () => {
+		it('should return 2 for the example problem input', () => {
+			// Arrange
+			const input = ['+1', '-2', '+3', '+1'];
+
+			// Act
+			const result = puzzle02(input);
+
+			// Assert
+			assert.equal(result, 2);
+		});
+
+		[
+			{ input: '+1, -1', expected: 0 },
+			{ input: '+3, +3, +4, -2, -4', expected: 10 },
+			{ input: '-6, +3, +8, +5, -6', expected: 5 },
+			{ input: '+7, +7, -2, -7, -4', expected: 14 }
+		].forEach((testCase) => {
+			it(`should return ${testCase.expected} for input "${testCase.input}`, () => {
+				// Arrange
+				const input = testCase.input;
+
+				// Act
+				const result = puzzle02(split(input));
 
 				// Assert
 				assert.equal(result, testCase.expected);
