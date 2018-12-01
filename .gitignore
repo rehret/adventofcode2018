@@ -10,6 +10,3 @@ coverage
 
 # build
 dist
-
-# vscode
-.vscode/settings.json
