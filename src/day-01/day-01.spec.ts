@@ -84,6 +84,24 @@ describe('day-01', () => {
 			});
 		});
 
+		it('should trim any trailing newline characters', () => {
+			// Arrange
+			const input = '+1\n+1\n+1\n\n\n';
+
+			// Act & Assert
+			assert.doesNotThrow(() => getFinalFrequency(input));
+			assert.equal(getFinalFrequency(input), 3);
+		});
+
+		it('should trim and leading newline characters', () => {
+			// Arrange
+			const input = '\n\n\n+1\n+1\n+1';
+
+			// Act & Assert
+			assert.doesNotThrow(() => getFinalFrequency(input));
+			assert.equal(getFinalFrequency(input), 3);
+		});
+
 		it('should throw an error if the input is empty', () => {
 			// Arrange
 			const input = '';
@@ -121,6 +139,24 @@ describe('day-01', () => {
 				// Assert
 				assert.equal(result, testCase.expected);
 			});
+		});
+
+		it('should trim any trailing newline characters', () => {
+			// Arrange
+			const input = '+1\n+1\n-2\n\n\n';
+
+			// Act & Assert
+			assert.doesNotThrow(() => findDuplicateFrequency(input));
+			assert.equal(findDuplicateFrequency(input), 0);
+		});
+
+		it('should trim and leading newline characters', () => {
+			// Arrange
+			const input = '\n\n\n+1\n+1\n-2';
+
+			// Act & Assert
+			assert.doesNotThrow(() => findDuplicateFrequency(input));
+			assert.equal(findDuplicateFrequency(input), 0);
 		});
 
 		it('should throw an error if the input is empty', () => {
