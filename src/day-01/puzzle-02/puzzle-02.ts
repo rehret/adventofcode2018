@@ -1,7 +1,8 @@
+import { split } from '../lib/input-splitter';
 import { parse } from '../lib/parser';
 
-export function findDuplicateFrequency(input: string[]): number {
-	const frequencyPattern = input.map((str) => parse(str));
+export function findDuplicateFrequency(input: string): number {
+	const frequencyPattern = split(input.trim()).map((str) => parse(str));
 	const previousFrequencies: number[] = [];
 	let duplicateFrequency: number | null = null;
 

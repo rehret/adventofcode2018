@@ -58,7 +58,7 @@ describe('day-01', () => {
 	describe('puzzle-01', () => {
 		it('should return 3 given example problem input', () => {
 			// Arrange
-			const input = ['+1', '-2', '+3', '+1'];
+			const input = '+1, -2, +3, +1';
 
 			// Act
 			const result = getFinalFrequency(input);
@@ -77,7 +77,7 @@ describe('day-01', () => {
 				const input = testCase.input;
 
 				// Act
-				const result = getFinalFrequency(split(input));
+				const result = getFinalFrequency(input);
 
 				// Assert
 				assert.equal(result, testCase.expected);
@@ -88,7 +88,7 @@ describe('day-01', () => {
 	describe('puzzle-02', () => {
 		it('should return 2 for the example problem input', () => {
 			// Arrange
-			const input = ['+1', '-2', '+3', '+1'];
+			const input = '+1, -2, +3, +1';
 
 			// Act
 			const result = findDuplicateFrequency(input);
@@ -108,7 +108,7 @@ describe('day-01', () => {
 				const input = testCase.input;
 
 				// Act
-				const result = findDuplicateFrequency(split(input));
+				const result = findDuplicateFrequency(input);
 
 				// Assert
 				assert.equal(result, testCase.expected);
