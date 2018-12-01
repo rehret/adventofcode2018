@@ -6,14 +6,12 @@ export function findDuplicateFrequency(input: string): number {
 	const previousFrequencies: number[] = [];
 	let duplicateFrequency: number | null = null;
 
+	let frequencyDeltaIndex = 0;
 	let frequency = 0;
 	previousFrequencies.push(frequency);
 
 	while (duplicateFrequency === null) {
-		const frequencyDelta = frequencyPattern.shift();
-		if (frequencyDelta === undefined) {
-			throw new Error('Input is empty');
-		}
+		const frequencyDelta = frequencyPattern[frequencyDeltaIndex];
 
 		frequency += frequencyDelta;
 		if (previousFrequencies.includes(frequency)) {
@@ -21,7 +19,7 @@ export function findDuplicateFrequency(input: string): number {
 		} else {
 			previousFrequencies.push(frequency);
 		}
-		frequencyPattern.push(frequencyDelta);
+		frequencyDeltaIndex = (frequencyDeltaIndex + 1) % frequencyPattern.length;
 	}
 
 	return duplicateFrequency;
