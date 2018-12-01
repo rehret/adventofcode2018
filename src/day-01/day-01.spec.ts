@@ -83,6 +83,14 @@ describe('day-01', () => {
 				assert.equal(result, testCase.expected);
 			});
 		});
+
+		it('should throw an error if the input is empty', () => {
+			// Arrange
+			const input = '';
+
+			// Act & Assert
+			assert.throws(() => getFinalFrequency(input));
+		});
 	});
 
 	describe('puzzle-02', () => {
@@ -113,6 +121,14 @@ describe('day-01', () => {
 				// Assert
 				assert.equal(result, testCase.expected);
 			});
+		});
+
+		it('should throw an error if the input is empty', () => {
+			// Arrange
+			const input = '';
+
+			// Act & Assert
+			assert.throws(() => findDuplicateFrequency(input));
 		});
 	});
 });
