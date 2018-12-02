@@ -8,14 +8,7 @@ export function boxFinder(input: string): string {
 		throw new Error('Could not find Box IDs differing by one character');
 	}
 
-	let result = '';
-	for (let i = 0; i < match1.length; i++) {
-		if (match1[i] === match2[i]) {
-			result += match1[i];
-		}
-	}
-
-	return result;
+	return match1.split('').filter((char, index) => char === match2[index]).join('');
 }
 
 function getBoxFilter(boxIds: string[]): (boxId: string, index: number) => boolean {
