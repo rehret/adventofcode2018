@@ -39,10 +39,10 @@ export class FabricSection {
 	}
 
 	/**
-	 * Calculates the area of overlap between this section and another section.
+	 * Calculates the coordinates of overlap between this section and another section.
 	 * @param section
 	 */
-	public GetOverlapArea(section: FabricSection): Coordinate[] {
+	public GetOverlapCoordinates(section: FabricSection): Coordinate[] {
 		if (!this.HasOverlap(section)) {
 			return [];
 		}
