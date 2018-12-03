@@ -103,6 +103,15 @@ describe('day-03', () => {
 					assert.equal(result.x, inputX);
 					assert.equal(result.y, inputY);
 				});
+
+				it('should use default value of 0 for x and y parameters', () => {
+					// Act
+					const result = new Coordinate();
+
+					// Assert
+					assert.equal(result.x, 0);
+					assert.equal(result.y, 0);
+				});
 			});
 		});
 
