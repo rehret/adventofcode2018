@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import { parse } from './lib/parser';
 import { Coordinate } from './lib/coordinate';
 import { FabricSection } from './lib/fabric-section';
+import { findOverlapCoordinates } from './lib/overlap';
 import { findFabricOverlaps } from './puzzle-01';
 import { findValidFabricSectionId } from './puzzle-02';
 
@@ -231,6 +232,57 @@ describe('day-03', () => {
 					assert.equal(result[0].x, 3);
 					assert.equal(result[0].y, 3);
 				});
+			});
+		});
+
+		describe('findOverlapCoordinates', () => {
+			it('should return coordinates in the overlap', () => {
+				// Arrange
+				const input = [
+					new FabricSection(0, 1, 1, 3, 3),
+					new FabricSection(1, 2, 2, 3, 3)
+				];
+
+				// Act
+				const result = findOverlapCoordinates(input);
+
+				// Assert
+				assert.equal(result.length, 4);
+				for (let y = 2; y <= 3; y++) {
+					for (let x = 2; x <= 3; x++) {
+						assert.isTrue(result.some((coord) => coord.x === x && coord.y === y));
+					}
+				}
+			});
+
+			it('should return an empty array if there is no overlap', () => {
+				// Arrange
+				const input = [
+					new FabricSection(0, 1, 1, 2, 2),
+					new FabricSection(1, 3, 3, 2, 2)
+				];
+
+				// Act
+				const result = findOverlapCoordinates(input);
+
+				// Assert
+				assert.equal(result.length, 0);
+			});
+
+			it('should only include each coordinate once for many overlaps', () => {
+				// Arrange
+				const input = [
+					new FabricSection(0, 1, 1, 3, 3),
+					new FabricSection(1, 2, 2, 2, 2),
+					new FabricSection(2, 3, 3, 1, 1)
+				];
+
+				// Act
+				const result = findOverlapCoordinates(input);
+
+				// Assert
+				assert.equal(result.length, 4);
+				assert.equal(result.filter((coord) => coord.x === 3 && coord.y === 3).length, 1);
 			});
 		});
 	});
