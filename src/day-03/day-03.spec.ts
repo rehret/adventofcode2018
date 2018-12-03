@@ -16,8 +16,8 @@ describe('day-03', () => {
 				const result = parse(input);
 
 				// Assert
-				assert.equal(result.length, 123);
-				assert.equal(result[0].id, 1);
+				assert.equal(result.length, 1);
+				assert.equal(result[0].id, 123);
 				assert.equal(result[0].start.x, 1);
 				assert.equal(result[0].start.y, 2);
 				assert.equal(result[0].width, 3);
