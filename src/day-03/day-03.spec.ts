@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 import { parse } from './lib/parser';
 import { findFabricOverlaps } from './puzzle-01';
+import { Coordinate } from './lib/coordinate';
 
 describe('day-03', () => {
 	describe('lib', () => {
@@ -84,6 +85,21 @@ describe('day-03', () => {
 				assert.equal(result[1].start.y, 2);
 				assert.equal(result[1].width, 3);
 				assert.equal(result[1].height, 3);
+			});
+		});
+
+		describe('Coordinate', () => {
+			it('should assign properties x and y from constructor parameters', () => {
+				// Arrange
+				const inputX = 1;
+				const inputY = 2;
+
+				// Act
+				const result = new Coordinate(inputX, inputY);
+
+				// Assert
+				assert.equal(result.x, inputX);
+				assert.equal(result.y, inputY);
 			});
 		});
 	});
