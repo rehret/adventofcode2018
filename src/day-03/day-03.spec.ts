@@ -257,6 +257,20 @@ describe('day-03', () => {
 					}
 				});
 
+				it('should return intersection for T-shaped intersections', () => {
+					// Arrange
+					const section1 = new FabricSection(3, 1, 1, 5);
+					const section2 = new FabricSection(1, 3, 5, 1);
+
+					// Act
+					const result = section1.GetOverlapCoordinates(section2);
+
+					// Assert
+					assert.equal(result.length, 1);
+					assert.equal(result[0].x, 3);
+					assert.equal(result[0].y, 3);
+				});
+
 				it('should work for all partial overlap permutations', () => {
 					// Arrange
 					//   Diagonal tests
