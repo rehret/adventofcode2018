@@ -6,7 +6,7 @@ export class FabricSection {
 	public width: number;
 	public height: number;
 	public get end(): Coordinate {
-		return new Coordinate(this.start.x + this.width, this.start.y + this.height);
+		return new Coordinate(this.start.x + (this.width - 1), this.start.y + (this.height - 1));
 	}
 
 	constructor(startX: number, startY: number, width: number, height: number) {
@@ -42,9 +42,9 @@ export class FabricSection {
 	 * Calculates the area of overlap between this section and another section.
 	 * @param section
 	 */
-	public GetOverlapArea(section: FabricSection): number {
+	public GetOverlapArea(section: FabricSection): Coordinate[] {
 		if (!this.HasOverlap(section)) {
-			return 0;
+			return [];
 		}
 
 		const startX = this.start.x >= section.start.x ? this.start.x : section.start.x;
@@ -52,10 +52,14 @@ export class FabricSection {
 		const startY = this.start.y >= section.start.y ? this.start.y : section.start.y;
 		const endY = this.end.y <= section.end.y ? this.end.y : section.end.y;
 
-		const overlapWidth = endX - startX;
-		const overlapHeight = endY - startY;
+		const overlap: Coordinate[] = [];
+		for (let y = startY; y <= endY; y++) {
+			for (let x = startX; x <= endX; x++) {
+				overlap.push(new Coordinate(x, y));
+			}
+		}
 
-		return overlapWidth * overlapHeight;
+		return overlap;
 	}
 
 	/**

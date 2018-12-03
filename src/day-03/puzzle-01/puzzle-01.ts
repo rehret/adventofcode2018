@@ -1,14 +1,18 @@
 import { parse } from '../lib/parser';
+import { Coordinate } from '../lib/coordinate';
 
 export function findFabricOverlaps(input: string): number {
 	const fabricSections = parse(input);
-	let areaSum = 0;
+	const totalOverlap: Coordinate[] = [];
 
 	for (let i = 0; i < fabricSections.length - 1; i++) {
 		for (let j = i + 1; j < fabricSections.length; j++) {
-			areaSum += fabricSections[i].GetOverlapArea(fabricSections[j]);
+			const overlap = fabricSections[i].GetOverlapArea(fabricSections[j]);
+			overlap
+				.filter((c) => !totalOverlap.some((o) => o.x === c.x && o.y === c.y))
+				.forEach((c) => totalOverlap.push(c));
 		}
 	}
 
-	return areaSum;
+	return totalOverlap.length;
 }
