@@ -296,5 +296,16 @@ describe('day-03', () => {
 			// Assert
 			assert.equal(result, 3);
 		});
+
+		it('should throw an error if there are no sections without overlap', () => {
+			// Arrange
+			const input = `
+				#1 @ 1,1: 3x3
+				#2 @ 2,2: 3x3
+			`;
+
+			// Act & Assert
+			assert.throws(() => findValidFabricSectionId(input));
+		});
 	});
 });
