@@ -149,52 +149,6 @@ describe('day-03', () => {
 				});
 			});
 
-			describe('HasOverlap', () => {
-				it('should return true if there is an overlap', () => {
-					// Arrange
-					const section = new FabricSection(1, 1, 3, 3);
-
-					// Act
-					const result = section.HasOverlap(new FabricSection(2, 2, 1, 1));
-
-					// Assert
-					assert.isTrue(result);
-				});
-
-				it('should return false if there is no overlap', () => {
-					// Arrange
-					const section = new FabricSection(1, 1, 3, 3);
-
-					// Act
-					const result = section.HasOverlap(new FabricSection(4, 4, 1, 1));
-
-					// Assert
-					assert.isFalse(result);
-				});
-
-				it('should return true if second section is entirely inside the first', () => {
-					// Arrange
-					const section = new FabricSection(1, 1, 4, 4);
-
-					// Act
-					const result = section.HasOverlap(new FabricSection(2, 2, 2, 2));
-
-					// Assert
-					assert.isTrue(result);
-				});
-
-				it('should return true if the first section is entirely inside the second', () => {
-					// Arrange
-					const section = new FabricSection(2, 2, 2, 2);
-
-					// Act
-					const result = new FabricSection(1, 1, 4, 4).HasOverlap(section);
-
-					// Assert
-					assert.isTrue(result);
-				});
-			});
-
 			describe('GetOverlapCoordinates', () => {
 				it('should return overlapped coordinates', () => {
 					// Arrange

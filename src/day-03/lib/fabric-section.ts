@@ -16,29 +16,6 @@ export class FabricSection {
 	}
 
 	/**
-	 * Determines if given section overlaps with this instance
-	 * @param section
-	 */
-	public HasOverlap(section: FabricSection): boolean {
-		const thisCorners = [
-			this.start,
-			new Coordinate(this.start.x, this.end.y),
-			this.end,
-			new Coordinate(this.end.x, this.start.y)
-		];
-
-		const sectionCorners = [
-			section.start,
-			new Coordinate(section.start.x, section.end.y),
-			section.end,
-			new Coordinate(section.end.x, section.start.y)
-		];
-
-		return thisCorners.some((corner) => section.PointIsInsideSection(corner)) ||
-		sectionCorners.some((corner) => this.PointIsInsideSection(corner));
-	}
-
-	/**
 	 * Calculates the coordinates of overlap between this section and another section.
 	 * @param section
 	 */
@@ -60,13 +37,5 @@ export class FabricSection {
 		}
 
 		return overlap;
-	}
-
-	/**
-	 * Determines if a point is inside the section
-	 * @param point
-	 */
-	private PointIsInsideSection(point: Coordinate): boolean {
-		return point.x >= this.start.x && point.y >= this.start.y && point.x <= this.end.x && point.y <= this.end.y;
 	}
 }
