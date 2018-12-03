@@ -1,6 +1,6 @@
 import { FabricSection } from './fabric-section';
 
-const inputRegex = /^#(\d)+\s+@\s+(\d+),(\d+):\s+(\d+)x(\d+)$/;
+const inputRegex = /^#(\d+)\s+@\s+(\d+),(\d+):\s+(\d+)x(\d+)$/;
 
 export function parse(input: string): FabricSection[] {
 	const lines = input.trim().split(/\n/);

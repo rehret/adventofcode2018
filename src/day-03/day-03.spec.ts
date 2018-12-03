@@ -10,13 +10,13 @@ describe('day-03', () => {
 		describe('parse', () => {
 			it('should correctly match id, start coordinate, width, and height', () => {
 				// Arrange
-				const input = '#1 @ 1,2: 3x4';
+				const input = '#123 @ 1,2: 3x4';
 
 				// Act
 				const result = parse(input);
 
 				// Assert
-				assert.equal(result.length, 1);
+				assert.equal(result.length, 123);
 				assert.equal(result[0].id, 1);
 				assert.equal(result[0].start.x, 1);
 				assert.equal(result[0].start.y, 2);
