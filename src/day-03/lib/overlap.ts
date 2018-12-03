@@ -2,16 +2,25 @@ import { Coordinate } from './coordinate';
 import { FabricSection } from './fabric-section';
 
 export function findOverlapCoordinates(fabricSections: FabricSection[]): Coordinate[] {
-	const totalOverlap: Coordinate[] = [];
+	const previousOverlaps = new Set<string>();
+	const uniqueOverlapCoords: Coordinate[] = [];
 
 	for (let i = 0; i < fabricSections.length - 1; i++) {
 		for (let j = i + 1; j < fabricSections.length; j++) {
-			const overlap = fabricSections[i].GetOverlapCoordinates(fabricSections[j]);
-			overlap
-				.filter((c) => !totalOverlap.some((o) => o.x === c.x && o.y === c.y))
-				.forEach((c) => totalOverlap.push(c));
+			const overlapCoords = fabricSections[i].GetOverlapCoordinates(fabricSections[j]);
+
+			for (const overlap of overlapCoords) {
+				if (!previousOverlaps.has(coordToString(overlap))) {
+					uniqueOverlapCoords.push(overlap);
+					previousOverlaps.add(coordToString(overlap));
+				}
+			}
 		}
 	}
 
-	return totalOverlap;
+	return uniqueOverlapCoords;
+}
+
+function coordToString(coord: Coordinate): string {
+	return `${coord.x},${coord.y}`;
 }
