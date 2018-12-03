@@ -20,18 +20,18 @@ export class FabricSection {
 	 * @param section
 	 */
 	public GetOverlapCoordinates(section: FabricSection): Coordinate[] {
-		if (!this.HasOverlap(section)) {
-			return [];
-		}
-
-		const startX = this.start.x >= section.start.x ? this.start.x : section.start.x;
-		const endX = this.end.x <= section.end.x ? this.end.x : section.end.x;
-		const startY = this.start.y >= section.start.y ? this.start.y : section.start.y;
-		const endY = this.end.y <= section.end.y ? this.end.y : section.end.y;
+		const start = new Coordinate(
+			Math.max(this.start.x, section.start.x),
+			Math.max(this.start.y, section.start.y)
+		);
+		const end = new Coordinate(
+			Math.min(this.end.x, section.end.x),
+			Math.min(this.end.y, section.end.y)
+		);
 
 		const overlap: Coordinate[] = [];
-		for (let y = startY; y <= endY; y++) {
-			for (let x = startX; x <= endX; x++) {
+		for (let y = start.y; y <= end.y; y++) {
+			for (let x = start.x; x <= end.x; x++) {
 				overlap.push(new Coordinate(x, y));
 			}
 		}
