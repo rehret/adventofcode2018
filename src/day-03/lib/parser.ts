@@ -8,11 +8,6 @@ export function parse(input: string): FabricSection[] {
 		const matches = line.trim().match(inputRegex);
 		if (matches !== null) {
 			const matchGroups = matches.slice(1).map((val) => parseInt(val));
-
-			if (matchGroups.some((val) => isNaN(val))) {
-				throw new Error('Invalid number');
-			}
-
 			return new FabricSection(matchGroups[0], matchGroups[1], matchGroups[2], matchGroups[3]);
 		} else {
 			throw new Error('Invalid input format');
