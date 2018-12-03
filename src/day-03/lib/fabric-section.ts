@@ -2,6 +2,7 @@ import { Coordinate } from './coordinate';
 
 export class FabricSection {
 
+	public id: number;
 	public start: Coordinate;
 	public width: number;
 	public height: number;
@@ -9,7 +10,8 @@ export class FabricSection {
 		return new Coordinate(this.start.x + (this.width - 1), this.start.y + (this.height - 1));
 	}
 
-	constructor(startX: number, startY: number, width: number, height: number) {
+	constructor(id: number, startX: number, startY: number, width: number, height: number) {
+		this.id = id;
 		this.start = new Coordinate(startX, startY);
 		this.width = width;
 		this.height = height;

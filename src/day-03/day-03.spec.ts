@@ -1,13 +1,14 @@
 import { assert } from 'chai';
 import { parse } from './lib/parser';
-import { findFabricOverlaps } from './puzzle-01';
 import { Coordinate } from './lib/coordinate';
 import { FabricSection } from './lib/fabric-section';
+import { findFabricOverlaps } from './puzzle-01';
+import { findValidFabricSectionId } from './puzzle-02';
 
 describe('day-03', () => {
 	describe('lib', () => {
 		describe('parse', () => {
-			it('should correctly match start coordinate, width, and height', () => {
+			it('should correctly match id, start coordinate, width, and height', () => {
 				// Arrange
 				const input = '#1 @ 1,2: 3x4';
 
@@ -16,6 +17,7 @@ describe('day-03', () => {
 
 				// Assert
 				assert.equal(result.length, 1);
+				assert.equal(result[0].id, 1);
 				assert.equal(result[0].start.x, 1);
 				assert.equal(result[0].start.y, 2);
 				assert.equal(result[0].width, 3);
@@ -32,11 +34,13 @@ describe('day-03', () => {
 				// Assert
 				assert.equal(result.length, 2);
 
+				assert.equal(result[0].id, 1);
 				assert.equal(result[0].start.x, 1);
 				assert.equal(result[0].start.y, 1);
 				assert.equal(result[0].width, 2);
 				assert.equal(result[0].height, 2);
 
+				assert.equal(result[1].id, 2);
 				assert.equal(result[1].start.x, 2);
 				assert.equal(result[1].start.y, 2);
 				assert.equal(result[1].width, 3);
@@ -82,6 +86,7 @@ describe('day-03', () => {
 
 				// Assert
 				assert.equal(result.length, 3);
+				assert.equal(result[1].id, 2);
 				assert.equal(result[1].start.x, 2);
 				assert.equal(result[1].start.y, 2);
 				assert.equal(result[1].width, 3);
@@ -117,17 +122,19 @@ describe('day-03', () => {
 
 		describe('FabricSection', () => {
 			describe('constructor', () => {
-				it('should assign the start, width, and height properties from the constructor parameters', () => {
+				it('should assign the id, start, width, and height properties from the constructor parameters', () => {
 					// Arrange
+					const inputId = 0;
 					const inputX = 1;
 					const inputY = 2;
 					const inputWidth = 3;
 					const inputHeight = 4;
 
 					// Act
-					const result = new FabricSection(inputX, inputY, inputWidth, inputHeight);
+					const result = new FabricSection(inputId, inputX, inputY, inputWidth, inputHeight);
 
 					// Assert
+					assert.equal(result.id, inputId);
 					assert.equal(result.start.x, inputX);
 					assert.equal(result.start.y, inputY);
 					assert.equal(result.width, inputWidth);
@@ -138,7 +145,7 @@ describe('day-03', () => {
 			describe('end property', () => {
 				it('should be computed rom start, width, and height', () => {
 					// Arrange
-					const section = new FabricSection(1, 1, 2, 3);
+					const section = new FabricSection(0, 1, 1, 2, 3);
 
 					// Act
 					const endCoord = section.end;
@@ -152,10 +159,10 @@ describe('day-03', () => {
 			describe('GetOverlapCoordinates', () => {
 				it('should return overlapped coordinates', () => {
 					// Arrange
-					const section = new FabricSection(1, 1, 2, 2);
+					const section = new FabricSection(0, 1, 1, 2, 2);
 
 					// Act
-					const result = section.GetOverlapCoordinates(new FabricSection(2, 2, 1, 1));
+					const result = section.GetOverlapCoordinates(new FabricSection(0, 2, 2, 1, 1));
 
 					// Assert
 					assert.equal(result.length, 1);
@@ -165,10 +172,10 @@ describe('day-03', () => {
 
 				it('should return an empty array if there is no overlap', () => {
 					// Arrange
-					const section = new FabricSection(1, 1, 2, 2);
+					const section = new FabricSection(0, 1, 1, 2, 2);
 
 					// Act
-					const result = section.GetOverlapCoordinates(new FabricSection(3, 3, 1, 1));
+					const result = section.GetOverlapCoordinates(new FabricSection(0, 3, 3, 1, 1));
 
 					// Assert
 					assert.equal(result.length, 0);
@@ -176,10 +183,10 @@ describe('day-03', () => {
 
 				it('should return correct coordinates if two sections are exactly the same', () => {
 					// Arrange
-					const section = new FabricSection(1, 1, 3, 3);
+					const section = new FabricSection(0, 1, 1, 3, 3);
 
 					// Act
-					const result = section.GetOverlapCoordinates(new FabricSection(1, 1, 3, 3));
+					const result = section.GetOverlapCoordinates(new FabricSection(0, 1, 1, 3, 3));
 
 					// Assert
 					assert.equal(result.length, 9);
@@ -192,12 +199,12 @@ describe('day-03', () => {
 
 				it('should return inner section if one section is inside the other', () => {
 					// Arrange
-					const test1 = new FabricSection(1, 1, 4, 4);
-					const test2 = new FabricSection(2, 2, 2, 2);
+					const test1 = new FabricSection(0, 1, 1, 4, 4);
+					const test2 = new FabricSection(0, 2, 2, 2, 2);
 
 					// Act
-					const result1 = test1.GetOverlapCoordinates(new FabricSection(2, 2, 2, 2));
-					const result2 = test2.GetOverlapCoordinates(new FabricSection(1, 1, 4, 4));
+					const result1 = test1.GetOverlapCoordinates(new FabricSection(0, 2, 2, 2, 2));
+					const result2 = test2.GetOverlapCoordinates(new FabricSection(0, 1, 1, 4, 4));
 
 					// Assert
 					assert.equal(result1.length, 4);
@@ -213,8 +220,8 @@ describe('day-03', () => {
 
 				it('should return intersection for T-shaped intersections', () => {
 					// Arrange
-					const section1 = new FabricSection(3, 1, 1, 5);
-					const section2 = new FabricSection(1, 3, 5, 1);
+					const section1 = new FabricSection(0, 3, 1, 1, 5);
+					const section2 = new FabricSection(0, 1, 3, 5, 1);
 
 					// Act
 					const result = section1.GetOverlapCoordinates(section2);
@@ -271,6 +278,23 @@ describe('day-03', () => {
 
 			// Assert
 			assert.equal(result, 0);
+		});
+	});
+
+	describe('puzzle-02', () => {
+		it('should return 3 for the example problem input', () => {
+			// Arrange
+			const input = `
+				#1 @ 1,3: 4x4
+				#2 @ 3,1: 4x4
+				#3 @ 5,5: 2x2
+			`;
+
+			// Act
+			const result = findValidFabricSectionId(input);
+
+			// Assert
+			assert.equal(result, 3);
 		});
 	});
 });
