@@ -1,9 +1,10 @@
 import { assert } from 'chai';
 import { Event } from './lib/event';
-import { getTargetGuardAndMinute } from './puzzle-01';
 import { GuardEventType, GuardEvent } from './lib/guard-event';
 import { GuardDetail } from './lib/guard-detail';
 import { getGuardDetails } from './lib/guard-event-log-processor';
+import { strategy1 } from './puzzle-01';
+import { strategy2 } from './puzzle-02';
 
 describe('day-04', () => {
 	describe('lib', () => {
@@ -89,6 +90,34 @@ describe('day-04', () => {
 
 					// Assert
 					assert.equal(totalMinutesAsleep, 0);
+				});
+			});
+
+			describe('mostFrequentMinuteAsleep property', () => {
+				it('should get the minute which the guard was most frequently asleep', () => {
+					// Arrange
+					const guard = new GuardDetail(1);
+					guard.minutesAsleep.set(1, 1);
+					guard.minutesAsleep.set(2, 20);
+					guard.minutesAsleep.set(3, 5);
+					guard.minutesAsleep.set(5, 10);
+
+					// Act
+					const result = guard.mostFrequentMinuteAsleep;
+
+					// Assert
+					assert.equal(result, 2);
+				});
+
+				it('should return -1 if the guard was never asleep', () => {
+					// Arrange
+					const guard = new GuardDetail(1);
+
+					// Act
+					const result = guard.mostFrequentMinuteAsleep;
+
+					// Assert
+					assert.equal(result, -1);
 				});
 			});
 		});
@@ -239,7 +268,7 @@ describe('day-04', () => {
 			`;
 
 			// Act
-			const result = getTargetGuardAndMinute(input);
+			const result = strategy1(input);
 
 			// Assert
 			assert.equal(result, 240);
@@ -263,10 +292,52 @@ describe('day-04', () => {
 			`;
 
 			// Act
-			const result = getTargetGuardAndMinute(input);
+			const result = strategy1(input);
 
 			// Assert
 			assert.equal(result, 27);
+		});
+	});
+
+	describe('puzzle-02', () => {
+		it('should return 4455 for the example problem input', () => {
+			// Arrange
+			const input = `
+				[1518-11-01 00:00] Guard #10 begins shift
+				[1518-11-01 00:05] falls asleep
+				[1518-11-01 00:25] wakes up
+				[1518-11-01 00:30] falls asleep
+				[1518-11-01 00:55] wakes up
+				[1518-11-01 23:58] Guard #99 begins shift
+				[1518-11-02 00:40] falls asleep
+				[1518-11-02 00:50] wakes up
+				[1518-11-03 00:05] Guard #10 begins shift
+				[1518-11-03 00:24] falls asleep
+				[1518-11-03 00:29] wakes up
+				[1518-11-04 00:02] Guard #99 begins shift
+				[1518-11-04 00:36] falls asleep
+				[1518-11-04 00:46] wakes up
+				[1518-11-05 00:03] Guard #99 begins shift
+				[1518-11-05 00:45] falls asleep
+				[1518-11-05 00:55] wakes up
+			`;
+
+			// Act
+			const result = strategy2(input);
+
+			// Assert
+			assert.equal(result, 4455);
+		});
+
+		it('should throw an exception if no guards were asleep', () => {
+			// Arrange
+			const input = `
+				[2018-01-01 00:01] Guard #1 begins shift
+				[2018-01-02 00:01] Guard #2 begins shift
+			`;
+
+			// Act & Assert
+			assert.throws(() => strategy2(input));
 		});
 	});
 });
