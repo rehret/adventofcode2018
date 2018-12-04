@@ -3,16 +3,16 @@ import { GuardDetail } from '../lib/guard-detail';
 
 export function getTargetGuardAndMinute(input: string): any {
 	const guards = getGuardDetails(input);
-	const targetGuard = guards.reduce((target, guard) => guard.minutesAsleep > target.minutesAsleep ? guard : target);
+	const targetGuard = guards.reduce((target, guard) => guard.totalMinutesAsleep > target.totalMinutesAsleep ? guard : target);
 	const targetMinute = getMostFrequentMinuteAsleep(targetGuard);
 
 	return targetGuard.id * targetMinute;
 }
 
 function getMostFrequentMinuteAsleep(guard: GuardDetail): number {
-	return Array.from(guard.minutesAsleep.keys()).reduce((mostFrequent, minute) => {
-		return (guard.minutesAsleep.get(minute) || 0) > (guard.minutesAsleep.get(mostFrequent) || 0)
-			? minute
-			: mostFrequent;
-	});
+	return Array.from(guard.minutesAsleep.entries())
+		.map((keyValueArray) => ({ minute: keyValueArray[0], occurances: keyValueArray[1] }))
+		.reduce((mostFrequent, minute) => {
+			return minute.occurances > mostFrequent.occurances ? minute : mostFrequent;
+		}).minute;
 }
