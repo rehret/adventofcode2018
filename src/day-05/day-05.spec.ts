@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import { parse } from './lib/parser';
 import { getFinalPolymer } from './lib/polymer-reducer';
 import { getResultingPolymerLength } from './puzzle-01';
+import { getOptimalPolymerLength } from './puzzle-02';
 
 describe('day-05', () => {
 	describe('lib', () => {
@@ -88,6 +89,19 @@ describe('day-05', () => {
 
 			// Assert
 			assert.equal(result, 10);
+		});
+	});
+
+	describe('puzzle-02', () => {
+		it('should return 4 for the example problem input', () => {
+			// Arrange
+			const input = 'dabAcCaCBAcCcaDA';
+
+			// Act
+			const result = getOptimalPolymerLength(input);
+
+			// Assert
+			assert.equal(result, 4);
 		});
 	});
 });
