@@ -19,7 +19,7 @@ function getArea(coord: Coordinate, startingCoords: Coordinate[], startingCoord:
 		const target = new Coordinate(coord.x + dir.x, coord.y + dir.y);
 		if (!visited.has(target.toString())) {
 			const targetDistance = getManhattanDistance(target, startingCoord);
-			if (!startingCoords.some((c) => c !== startingCoord && getManhattanDistance(target, c) <= targetDistance)) {
+			if (startingCoords.every((c) => c === startingCoord || targetDistance < getManhattanDistance(target, c))) {
 				getArea(target, startingCoords, startingCoord, visited);
 			}
 		}
@@ -33,14 +33,33 @@ function getArea(coord: Coordinate, startingCoords: Coordinate[], startingCoord:
  * @param coordinates
  */
 export function getBoundedBaseCoordinates(coordinates: Coordinate[]): Coordinate[] {
-	return coordinates.filter((coord, _index, coordArray) => !isInfinite(coord, coordArray));
+	return coordinates.filter((coord, _index, coordArray) => !areaIsInfinite(coord, coordArray));
 }
 
-export function isInfinite(target: Coordinate, coordinates: Coordinate[]): boolean {
-	return directions.some((dir) => {
-		const check = new Coordinate(target.x + dir.x, target.y + dir.y);
-		return coordinates
-			.filter((coord) => coord !== target)
-			.every((coord) => getManhattanDistance(check, coord) > getManhattanDistance(target, coord));
-	});
+export function areaIsInfinite(base: Coordinate, coordinates: Coordinate[]): boolean {
+	coordinates = coordinates.filter((coord) => coord !== base);
+	return coordinates
+		.map((coord) => getPointsOnPerpendicular(base, coord))
+		.some((perpendicularPoints) => {
+			return perpendicularPoints.some((perpendicular) => {
+				return coordinates
+					.every((referenceCoord) => {
+						return getDistance(perpendicular, referenceCoord) > getDistance(base, referenceCoord);
+					});
+			});
+		});
+}
+
+function getDistance(c1: Coordinate, c2: Coordinate): number {
+	return Math.sqrt(Math.pow(c2.x - c1.x, 2) + Math.pow(c2.y - c1.y, 2));
+}
+
+function getPointsOnPerpendicular(base: Coordinate, reference: Coordinate): [Coordinate, Coordinate] {
+	const rise = reference.y - base.y;
+	const run = reference.x - base.x;
+
+	return [
+		new Coordinate(base.x + rise, base.y + -run),
+		new Coordinate(base.x + -rise, base.y + run)
+	];
 }

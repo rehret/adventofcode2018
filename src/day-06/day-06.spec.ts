@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { Coordinate } from './lib/coordinate';
-import { getManhattanDistance, isInfinite } from './lib/infinite-grid';
+import { getManhattanDistance, areaIsInfinite } from './lib/infinite-grid';
 import { puzzle01 } from './puzzle-01';
 
 describe('day-06', () => {
@@ -62,14 +62,14 @@ describe('day-06', () => {
 			});
 		});
 
-		describe('isInfinite', () => {
+		describe('areaIsInfinite', () => {
 			it('should return false for bounded coordinates', () => {
 				// Arrange
 				const coordinate = new Coordinate(0, 0);
 				const bounds = [ coordinate, new Coordinate(2, 0), new Coordinate(-2, 0), new Coordinate(0, 2), new Coordinate(0, -2) ];
 
 				// Act
-				const result = isInfinite(coordinate, bounds);
+				const result = areaIsInfinite(coordinate, bounds);
 
 				// Assert
 				assert.isFalse(result);
@@ -81,7 +81,7 @@ describe('day-06', () => {
 				const bounds = [ coordinate, new Coordinate(2, 0), new Coordinate(-2, 0), new Coordinate(0, 2) ];
 
 				// Act
-				const result = isInfinite(coordinate, bounds);
+				const result = areaIsInfinite(coordinate, bounds);
 
 				// Assert
 				assert.isTrue(result);
@@ -93,7 +93,7 @@ describe('day-06', () => {
 				const bounds = [ coordinate, new Coordinate(2, 2), new Coordinate(2, -2), new Coordinate(-2, 2), new Coordinate(-2, -2) ];
 
 				// Act
-				const result = isInfinite(coordinate, bounds);
+				const result = areaIsInfinite(coordinate, bounds);
 
 				// Assert
 				assert.isFalse(result);
@@ -105,7 +105,7 @@ describe('day-06', () => {
 				const bounds = [ coordinate, new Coordinate(2, 2), new Coordinate(2, -2), new Coordinate(-2, 2) ];
 
 				// Act
-				const result = isInfinite(coordinate, bounds);
+				const result = areaIsInfinite(coordinate, bounds);
 
 				// Assert
 				assert.isTrue(result);
