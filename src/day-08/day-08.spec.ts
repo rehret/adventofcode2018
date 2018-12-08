@@ -62,14 +62,6 @@ describe('day-08', () => {
 				assert.deepEqual(child.metadata, [1, 2, 3]);
 			});
 
-			it('should throw an error if any input value is not a number', () => {
-				// Arrange
-				const input = '0 3 1 A 3';
-
-				// Act & Assert
-				assert.throws(() => parse(input));
-			});
-
 			it('should trim whitespace from the input', () => {
 				// Arrange
 				const input = '\n\n\n0 3 1 2 3\n\n\n';
@@ -81,6 +73,22 @@ describe('day-08', () => {
 				assert.equal(node.children.length, 0);
 				assert.equal(node.metadata.length, 3);
 				assert.deepEqual(node.metadata, [1, 2, 3]);
+			});
+
+			it('should throw an error if there is not at least one node definition in the input', () => {
+				// Arrange
+				const input = '1';
+
+				// Act & Assert
+				assert.throws(() => parse(input));
+			});
+
+			it('should throw an error if any input value is not a number', () => {
+				// Arrange
+				const input = '0 3 1 A 3';
+
+				// Act & Assert
+				assert.throws(() => parse(input));
 			});
 		});
 	});
