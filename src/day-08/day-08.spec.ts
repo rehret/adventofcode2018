@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import { Node } from './lib/node';
 import { parse } from './lib/parser';
 import { getSumOfMetadata } from './puzzle-01';
+import { getComplexMetadataSum } from './puzzle-02/puzzle-02';
 
 describe('day-08', () => {
 	describe('lib', () => {
@@ -103,6 +104,19 @@ describe('day-08', () => {
 
 			// Assert
 			assert.equal(result, 138);
+		});
+	});
+
+	describe('puzzle-02', () => {
+		it('should return 66 for example problem input', () => {
+			// Arrange
+			const input = '2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2';
+
+			// Act
+			const result = getComplexMetadataSum(input);
+
+			// Assert
+			assert.equal(result, 66);
 		});
 	});
 });
