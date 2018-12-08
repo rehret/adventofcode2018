@@ -1,7 +1,7 @@
 import { parse } from '../lib/parser';
 import { Node } from '../lib/node';
 
-export function puzzle01(input: string): number {
+export function getSumOfMetadata(input: string): number {
 	const tree = parse(input);
 	return getMetadataSum(tree);
 }

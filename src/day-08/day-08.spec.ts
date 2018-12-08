@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { Node } from './lib/node';
 import { parse } from './lib/parser';
-import { puzzle01 } from './puzzle-01';
+import { getSumOfMetadata } from './puzzle-01';
 
 describe('day-08', () => {
 	describe('lib', () => {
@@ -99,7 +99,7 @@ describe('day-08', () => {
 			const input = '2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2';
 
 			// Act
-			const result = puzzle01(input);
+			const result = getSumOfMetadata(input);
 
 			// Assert
 			assert.equal(result, 138);
