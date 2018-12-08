@@ -1,7 +1,8 @@
 import { assert } from 'chai';
 import { parse } from './lib/parser';
-import { getInstructionOrder } from './puzzle-01';
 import { Instruction } from './lib/instruction';
+import { getInstructionOrder } from './puzzle-01';
+import { getParallelExecutionTime } from './puzzle-02';
 
 describe('day-07', () => {
 	describe('lib', () => {
@@ -95,6 +96,46 @@ describe('day-07', () => {
 
 			// Assert
 			assert.equal(result, 'CABDFE');
+		});
+	});
+
+	describe('puzzle-02', () => {
+		it('should return 15 for example problem input', () => {
+			// Arrange
+			const input = `
+				Step C must be finished before step A can begin.
+				Step C must be finished before step F can begin.
+				Step A must be finished before step B can begin.
+				Step A must be finished before step D can begin.
+				Step B must be finished before step E can begin.
+				Step D must be finished before step E can begin.
+				Step F must be finished before step E can begin.
+			`;
+
+			// Act
+			const result = getParallelExecutionTime(input, 2, 0);
+
+			// Assert
+			assert.equal(result, 15);
+		});
+
+		it('should default number of workers to 5 and base execution time to 60', () => {
+			// Arrange
+			const input = `
+				Step A must be finished before step F can begin.
+				Step B must be finished before step F can begin.
+				Step C must be finished before step F can begin.
+				Step D must be finished before step F can begin.
+				Step E must be finished before step F can begin.
+			`;
+
+			// Act
+			const result = getParallelExecutionTime(input);
+
+			// Assert
+			// Step E is the bottleneck. As soon as E is finished, F can begin.
+			// So execution time is E + F, or (60 + 5) + (60 + 6)
+			assert.equal(result, 131);
 		});
 	});
 });
