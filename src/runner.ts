@@ -1,3 +1,6 @@
+import * as fs from 'fs';
+import * as path from 'path';
+
 function execute(dayInput: string, puzzleInput: string) {
 	const day = parseInt(dayInput);
 	const puzzle = parseInt(puzzleInput);
@@ -8,12 +11,23 @@ function execute(dayInput: string, puzzleInput: string) {
 		const solution = require(`./${dayStr}/${puzzleStr}/index.ts`);
 
 		if (typeof solution.default === 'function') {
-			solution.default();
+			const inputFileContents = getInputFileContents(dayStr);
+			const result = solution.default(inputFileContents);
+			console.log(result);
 		} else {
 			console.error(`${dayStr}/${puzzleStr} does not not export a default function`);
 		}
 	} else {
 		throw new Error('Parameter is not a number');
+	}
+}
+
+function getInputFileContents(dayStr: string): string {
+	const filePath = path.resolve(__dirname, `./${dayStr}/input.txt`);
+	if (fs.existsSync(filePath)) {
+		return fs.readFileSync(filePath, 'utf-8');
+	} else {
+		return '';
 	}
 }
 
@@ -25,5 +39,5 @@ function leftPad(str: string, width: number, padCharacter: string = ' '): string
 	return outStr;
 }
 
-const [_nodeCmd, _script, dayArg, puzzleArg] = process.argv;
+const [ dayArg, puzzleArg ] = process.argv.slice(2);
 execute(dayArg, puzzleArg);
