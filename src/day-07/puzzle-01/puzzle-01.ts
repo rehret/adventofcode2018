@@ -1,7 +1,7 @@
 import { parse } from '../lib/parser';
 import { Instruction } from '../lib/instruction';
 
-export function puzzle01(input: string): string {
+export function getInstructionOrder(input: string): string {
 	const instructions = parse(input).sort((a, b) => a.step.localeCompare(b.step));
 	const completedInstructions: Set<string> = new Set();
 

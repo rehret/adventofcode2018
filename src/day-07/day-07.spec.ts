@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { parse } from './lib/parser';
-import { puzzle01 } from './puzzle-01';
+import { getInstructionOrder } from './puzzle-01';
 import { Instruction } from './lib/instruction';
 
 describe('day-07', () => {
@@ -91,7 +91,7 @@ describe('day-07', () => {
 			`;
 
 			// Act
-			const result = puzzle01(input);
+			const result = getInstructionOrder(input);
 
 			// Assert
 			assert.equal(result, 'CABDFE');
